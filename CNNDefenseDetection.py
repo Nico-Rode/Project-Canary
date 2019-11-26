@@ -41,15 +41,17 @@ model.add(Dropout(.5))
 model.add(Dense(3, activation='sigmoid'))
 model.compile('adam', loss='categorical_crossentropy')
 
+print("Here we are...")
 
 
-pickle_in = open("X.pickle","rb")
-X = pickle.load(pickle_in)
 
-pickle_in = open("y.pickle","rb")
-y = pickle.load(pickle_in)
+# pickle_in = open("X.pickle","rb")
+# X = pickle.load(pickle_in)
 
-model.fit(X,y, batch_size=32, epochs=3, validation_split=.3)
+# pickle_in = open("y.pickle","rb")
+# y = pickle.load(pickle_in)
+
+# model.fit(X,y, batch_size=32, epochs=3, validation_split=.3)
 
 
 
