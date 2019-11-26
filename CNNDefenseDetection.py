@@ -5,6 +5,8 @@ from keras.layers import Dense, LSTM, Input, TimeDistributed, Dropout
 from keras.layers import Convolution2D, MaxPooling2D, Flatten, GlobalAveragePooling2D
 import pickle
 
+from imageGenerator import ImageDataGenerator
+
 
 
 
@@ -42,14 +44,31 @@ model.add(Dense(3, activation='sigmoid'))
 model.compile('adam', loss='categorical_crossentropy')
 
 
-
-pickle_in = open("X.pickle","rb")
-X = pickle.load(pickle_in)
-
-pickle_in = open("y.pickle","rb")
-y = pickle.load(pickle_in)
-
-model.fit(X,y, batch_size=32, epochs=3, validation_split=.3)
+import os
+directoryPath = "C:\\Users\\Nico Rode\\Desktop\\NFLAnalysis"
 
 
+datagen = ImageDataGenerator()
+
+train_generator = datagen.flow_from_directory(
+        os.path.join(directoryPath, "NFLPreSnapVideos", "Extractions", "Train"),
+        target_size=(224, 224),
+        batch_size=32,
+        frames_per_step=150,
+        shuffle=False)
+
+validation_generator = datagen.flow_from_directory(
+        os.path.join(directoryPath, "NFLPreSnapVideos", "Extractions", "Test"),
+        target_size=(224, 224),
+        batch_size=32,
+        frames_per_step=150,
+        shuffle=False)
+
+
+model.fit_generator(
+        train_generator,
+        steps_per_epoch=500,
+        epochs=50,
+        validation_data=validation_generator,
+        validation_steps=250)
 
