@@ -10,7 +10,7 @@ from keras.applications.inception_v3 import InceptionV3, preprocess_input
 from keras.models import Model, load_model
 from keras.layers import Input
 from keras_preprocessing.image import load_img, img_to_array
-from CNNDefenseDetection import build_naive_model, train_model, predict_model
+
 
 import pickle
 
