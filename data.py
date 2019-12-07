@@ -2,7 +2,7 @@ import os
 import glob
 import keras
 from keras_video.generator import VideoFrameGenerator
-
+#from keras_video.sliding import SlidingFrameGenerator
 
 
 def video_gen(directoryPath, SIZE, CHANNELS, NBFRAME):

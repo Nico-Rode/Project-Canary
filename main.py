@@ -1,6 +1,7 @@
 from readFiles import get_list_of_raw_videos, trim_videos_in_list
 from vectorizeFiles import extract_frames_from_trimmed_videos 
 from extractFeaturesVectorizedVideos import create_training_data, test_testing_data
+
 from CNNDefenseDetection import build_time_distributed_model, build_medium_model
 from DefensiveRNN import get_data, define_data
 from data import video_gen
@@ -52,23 +53,23 @@ def prep_videos(directoryPath, firstTimeBool):
 
     SIZE = (224, 224)
     CHANNELS = 3
-    NBFRAME = 5
+    NBFRAME = 20
 
     train, valid, classes = video_gen(directoryPath, SIZE, CHANNELS, NBFRAME)
 
     print(len(classes))
 
-    EPOCHS=50
+    EPOCHS=15
     # create a "chkp" directory before to run that
     # because ModelCheckpoint will write models inside
-    # callbacks = [
-    #     keras.callbacks.ReduceLROnPlateau(verbose=1),
-    #     keras.callbacks.ModelCheckpoint(
-    #         'chkp/weights.{epoch:02d}-{val_loss:.2f}.hdf5',
-    #         verbose=1),
-    # ]
+    callbacks = [
+        keras.callbacks.ReduceLROnPlateau(verbose=1),
+        keras.callbacks.ModelCheckpoint(
+            'logs/weights.{epoch:02d}-{val_loss:.2f}.hdf5',
+            verbose=1),
+    ]
 
-    model = build_time_distributed_model(NBFRAME, SIZE, CHANNELS, classes, train, valid, EPOCHS)
+    model = build_time_distributed_model(NBFRAME, SIZE, CHANNELS, classes, train, valid, EPOCHS, callbacks)
 
     #model = build_medium_model()
     # print("got compiled model")

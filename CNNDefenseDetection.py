@@ -76,7 +76,7 @@ def action_model(shape=(5, 112, 112, 3), nbout=5):
     return model
 
 
-def build_time_distributed_model(NBFRAME, SIZE, CHANNELS, classes, train, valid, EPOCHS):
+def build_time_distributed_model(NBFRAME, SIZE, CHANNELS, classes, train, valid, EPOCHS, callbacks):
     INSHAPE=(NBFRAME,) + SIZE + (CHANNELS,) # (5, 112, 112, 3)
     print(INSHAPE)
     model = action_model(INSHAPE, len(classes))
@@ -90,6 +90,7 @@ def build_time_distributed_model(NBFRAME, SIZE, CHANNELS, classes, train, valid,
         train,
         validation_data=valid,
         verbose=1,
+        callbacks = callbacks,
         epochs=EPOCHS
     )
     print("trying to train")
