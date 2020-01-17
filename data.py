@@ -6,8 +6,8 @@ from keras.preprocessing.image import ImageDataGenerator
 #from keras_video.sliding import SlidingFrameGenerator
 
 
-def video_gen(directoryPath, SIZE, CHANNELS, NBFRAME):
-    classPath = os.path.join(directoryPath, "NFLPreSnapVideos", "Train")
+def video_gen(directoryPath, classPath, SIZE, CHANNELS, NBFRAME):
+    classPath = os.path.join(directoryPath, "NFLPreSnapVideos", classPath, "train")
     print(classPath)
 
     print("Listing Dirs")

@@ -15,7 +15,7 @@ print("Keras version = {}".format(keras.__version__))
 
 
 
-def build_convnet(shape):
+def build_convnet(shape=(224, 224, 3)):
     momentum = .9
     model = keras.Sequential()
     model.add(Conv2D(64, (3,3), input_shape=shape, padding='same', activation='relu'), )
@@ -45,7 +45,7 @@ def build_convnet(shape):
     return model
 
 
-def action_model(shape, nbout):
+def action_model(shape=(5, 112, 112, 3), nbout=5):
     # Create our convnet with (112, 112, 3) input shape
     print(shape[1:])
     convnet = build_convnet(shape[1:])
@@ -82,7 +82,7 @@ def build_time_distributed_model(NBFRAME, SIZE, CHANNELS, classes, train, valid,
     model = action_model(INSHAPE, len(classes))
     print("got model")
     optimizer = keras.optimizers.Adam(0.001)
-    model.compile(optimizer, 'categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer, 'categorical_crossentropy', metrics=['acc'])
     print("compiled model")
 
     print("got compiled model")
@@ -90,6 +90,7 @@ def build_time_distributed_model(NBFRAME, SIZE, CHANNELS, classes, train, valid,
         train,
         validation_data=valid,
         verbose=1,
+        callbacks = callbacks,
         epochs=EPOCHS
     )
     print("trying to train")
@@ -147,6 +148,3 @@ def build_medium_model(shape=(5,224,224,3)):
     model.compile(optimizer, 'categorical_crossentropy', metrics=['acc'])
 
     return model
-
-
-

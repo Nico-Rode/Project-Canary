@@ -1,16 +1,18 @@
 import keras
+#from keras import models.mobilenet.MobileNet
 from keras.layers import Dense, LSTM, Input, TimeDistributed, Dropout, GRU
 from extractFeaturesVectorizedVideos import create_training_data, test_testing_data
 import os
 from data import video_gen
 directoryPath = os.path.join("/","Users", "nicholasrode", "Desktop", "ProjectCanary")
+PCDirectoryPath = os.path.join("c:/", "Users", "Nico Rode", "Desktop", "NFLAnalysis")
+
 
 def build_mobilenet(shape=(224, 224, 3), nbout=3):
-    model = keras.models.mobilenet.MobileNet(
+    model = keras.applications.mobilenet.MobileNet(
         include_top=False,
         input_shape=shape,
         weights='imagenet')
-    # Keep 9 layers to train﻿﻿
     trainable = 9
     for layer in model.layers[:-trainable]:
         layer.trainable = False
@@ -58,7 +60,7 @@ NBFRAME = 5
 BS = 8
 
 
-train, valid, classes = video_gen(directoryPath, SIZE, CHANNELS, NBFRAME)
+train, valid, classes = video_gen(PCDirectoryPath, SIZE, CHANNELS, NBFRAME)
 
 print(len(classes))
 
@@ -88,7 +90,6 @@ model.fit_generator(
     train,
     validation_data=valid,
     verbose=1,
-    callbacks = callbacks,
     epochs=EPOCHS
 )
 
