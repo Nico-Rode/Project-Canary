@@ -28,7 +28,7 @@ def get_list_of_raw_videos(directoryPath):
 # currently just grabbing the fisrt few seconds of the videos for presnap look of offense and defense
 def trim_videos_in_list(listOfRawVideos, folderPath):
     for fileName in listOfRawVideos:
-        ffmpeg_extract_subclip("{}\\NFLRawVideos\\{}".format(folderPath, fileName), 2, 7, targetname="{}\\NFLPreSnapVideos\\{}".format(folderPath, fileName))
+        ffmpeg_extract_subclip("{}\\NFLRawVideos\\{}".format(folderPath, fileName), 3.5, 9, targetname="{}\\NFLPreSnapVideos\\Motion\\snippedVideos\\{}".format(folderPath, fileName))
        
 
 
